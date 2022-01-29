@@ -41,4 +41,24 @@ $app->get('/products/{product_code}', function (Request $raquest, Response $resp
     $response->getBody()->write($json);
     return $response->withHeader('Content-Type', 'application/json');
  });
+ 
+ 
+ $app->post('/products', function (Request $raquest, Response $response, array $args) {
+    $conn = $GLOBALS[ 'dbconn'];
+    $sql = "select * from products";
+    $result = $conn->query ($sql);
+ //    $nun = $result->num_rows;
+     $data = array();
+     while ($row = $result->fetch_assoc()){
+         array_push($data, $row);
+     
+     }
+    $json = json_encode($data);
+    
+    $response->getBody()->write($json);
+    return $response->withHeader('Content-Type', 'application/json');
+ });
+ 
+ 
+ 
 ?>
